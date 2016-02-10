@@ -4,6 +4,7 @@
 // Definitions: https://github.com/borisyankov/DefinitelyTyped
 
 declare namespace __React {
+
     //
     // React Elements
     // ----------------------------------------------------------------------
@@ -156,6 +157,7 @@ declare namespace __React {
         propTypes?: ValidationMap<P>;
         contextTypes?: ValidationMap<any>;
         defaultProps?: P;
+        displayName?: string;
     }
 
     interface ComponentClass<P> {
@@ -526,6 +528,8 @@ declare namespace __React {
          */
         backgroundBlendMode?: any;
 
+        backgroundColor?: any;
+        
         backgroundComposite?: any;
 
         /**
@@ -694,6 +698,11 @@ declare namespace __React {
          * Sets the width of an element's four borders. This property can have from one to four values. This is a shorthand property for setting values simultaneously for border-top-width, border-right-width, border-bottom-width, and border-left-width.
          */
         borderWidth?: any;
+
+        /**
+         * This property specifies how far an absolutely positioned box's bottom margin edge is offset above the bottom edge of the box's containing block. For relatively positioned boxes, the offset is with respect to the bottom edges of the box itself (i.e., the box is given a position in the normal flow, then offset from that position according to these properties).
+         */
+        bottom?: any;
 
         /**
          * Obsolete.
@@ -2089,7 +2098,7 @@ declare namespace __React {
         map<T>(children: ReactNode, fn: (child: ReactChild, index: number) => T): T[];
         forEach(children: ReactNode, fn: (child: ReactChild, index: number) => any): void;
         count(children: ReactNode): number;
-        only(children: ReactNode): ReactChild;
+        only(children: ReactNode): ReactElement<any>;
         toArray(children: ReactNode): ReactChild[];
     }
 
@@ -2262,6 +2271,7 @@ declare namespace JSX {
         svg: React.SVGProps;
 
         circle: React.SVGProps;
+        clipPath: React.SVGProps;
         defs: React.SVGProps;
         ellipse: React.SVGProps;
         g: React.SVGProps;
