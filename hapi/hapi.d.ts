@@ -292,6 +292,8 @@ declare module "hapi" {
 		/** Redirects the client to the specified uri. Same as calling reply().redirect(uri).
 		he response flow control rules apply. */
         redirect(uri: string): ResponseRedirect;
+		/** NOT DOCUMENTED:  set to true when reply is made.  false otherwise */
+		_replied: boolean;
     }
 
     export interface ISessionHandler {
