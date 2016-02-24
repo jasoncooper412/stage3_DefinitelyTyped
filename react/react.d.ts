@@ -128,6 +128,14 @@ declare namespace __React {
         refs: {
             [key: string]: ReactInstance
         };
+        //explicity add these functions from ComponentLifecycle so intelisence pickes them up.
+        componentWillMount(): void;
+        componentDidMount(): void;
+        componentWillReceiveProps(nextProps: P, nextContext: any): void;
+        shouldComponentUpdate(nextProps: P, nextState: S, nextContext: any): boolean;
+        componentWillUpdate(nextProps: P, nextState: S, nextContext: any): void;
+        componentDidUpdate(prevProps: P, prevState: S, prevContext: any): void;
+        componentWillUnmount(): void;
     }
 
     interface ClassicComponent<P, S> extends Component<P, S> {
@@ -153,7 +161,7 @@ declare namespace __React {
     }
 
     interface ComponentClass<P> {
-        new(props?: P, context?: any): Component<P, any>;
+        new (props?: P, context?: any): Component<P, any>;
         propTypes?: ValidationMap<P>;
         contextTypes?: ValidationMap<any>;
         childContextTypes?: ValidationMap<any>;
@@ -161,7 +169,7 @@ declare namespace __React {
     }
 
     interface ClassicComponentClass<P> extends ComponentClass<P> {
-        new(props?: P, context?: any): ClassicComponent<P, any>;
+        new (props?: P, context?: any): ClassicComponent<P, any>;
         getDefaultProps?(): P;
         displayName?: string;
     }
@@ -215,9 +223,14 @@ declare namespace __React {
         nativeEvent: Event;
         preventDefault(): void;
         stopPropagation(): void;
-        target: EventTarget;
+        target: IEventTarget;
         timeStamp: Date;
         type: string;
+    }
+
+    interface IEventTarget extends EventTarget {
+        /** value returned by the event */
+        value: any;
     }
 
     interface ClipboardEvent extends SyntheticEvent {
