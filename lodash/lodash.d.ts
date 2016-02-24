@@ -515,8 +515,8 @@ declare module _ {
          * @return Returns the new array of filtered values.
          */
         difference<T>(
-            array: any[]|List<any>,
-            ...values: any[]
+            array: T[]|List<T>,
+            ...values: Array<T[]|List<T>>
         ): T[];
     }
 
@@ -5295,21 +5295,6 @@ declare module _ {
         ): any[];
     }
 
-    //_.unset
-    interface LoDashStatic {
-        /**
-         * Removes the property at path of object.
-         *
-         * @param object The object to modify.
-         * @param path The path of the property to unset.
-         * @return Returns true if the property is deleted, else false.
-         */
-        unset<T>(
-            object: T,
-            path: StringRepresentable | StringRepresentable[]
-        ): boolean;
-    }
-
     //_.unzip
     interface LoDashStatic {
         /**
@@ -8012,11 +7997,17 @@ declare module _ {
             thisArg?: any
         ): TResult[];
 
+        map<T extends {}, TResult>(
+            collection: NumericDictionary<T>,
+            iteratee?: NumericDictionaryIterator<T, TResult>,
+            thisArg?: any
+        ): TResult[];
+
         /**
          * @see _.map
          */
         map<T, TResult>(
-            collection: List<T>|Dictionary<T>,
+            collection: List<T>|Dictionary<T>|NumericDictionary<T>,
             iteratee?: string
         ): TResult[];
 
@@ -8024,7 +8015,7 @@ declare module _ {
          * @see _.map
          */
         map<T, TObject extends {}>(
-            collection: List<T>|Dictionary<T>,
+            collection: List<T>|Dictionary<T>|NumericDictionary<T>,
             iteratee?: TObject
         ): boolean[];
     }
@@ -8315,6 +8306,15 @@ declare module _ {
         * @see _.reduce
         **/
         reduce<T, TResult>(
+            collection: NumericDictionary<T>,
+            callback: MemoIterator<T, TResult>,
+            accumulator: TResult,
+            thisArg?: any): TResult;
+
+        /**
+        * @see _.reduce
+        **/
+        reduce<T, TResult>(
             collection: Array<T>,
             callback: MemoIterator<T, TResult>,
             thisArg?: any): TResult;
@@ -8332,6 +8332,14 @@ declare module _ {
         **/
         reduce<T, TResult>(
             collection: Dictionary<T>,
+            callback: MemoIterator<T, TResult>,
+            thisArg?: any): TResult;
+
+        /**
+        * @see _.reduce
+        **/
+        reduce<T, TResult>(
+            collection: NumericDictionary<T>,
             callback: MemoIterator<T, TResult>,
             thisArg?: any): TResult;
 
@@ -10611,6 +10619,59 @@ declare module _ {
      * Lang *
      ********/
 
+    //_.castArray
+    interface LoDashStatic {
+        /**
+         * Casts value as an array if it’s not one.
+         *
+         * @param value The value to inspect.
+         * @return Returns the cast array.
+         */
+        castArray<T>(value: T): T[];
+    }
+
+    interface LoDashImplicitWrapper<T> {
+        /**
+         * @see _.castArray
+         */
+        castArray(): LoDashImplicitArrayWrapper<T>;
+    }
+
+    interface LoDashImplicitArrayWrapper<T> {
+        /**
+         * @see _.castArray
+         */
+        castArray(): LoDashImplicitArrayWrapper<T>;
+    }
+
+    interface LoDashImplicitObjectWrapper<T> {
+        /**
+         * @see _.castArray
+         */
+        castArray(): LoDashImplicitArrayWrapper<T>;
+    }
+
+    interface LoDashExplicitWrapper<T> {
+        /**
+         * @see _.castArray
+         */
+        castArray(): LoDashExplicitArrayWrapper<T>;
+    }
+
+    interface LoDashExplicitArrayWrapper<T> {
+        /**
+         * @see _.castArray
+         */
+        castArray(): LoDashExplicitArrayWrapper<T>;
+    }
+
+    interface LoDashExplicitObjectWrapper<T> {
+        /**
+         * @see _.castArray
+         */
+        castArray(): LoDashExplicitArrayWrapper<T>;
+    }
+
     //_.clone
     interface LoDashStatic {
         /**
@@ -10959,6 +11020,31 @@ declare module _ {
          * @see _.isArray
          */
         isArray(): LoDashExplicitWrapper<boolean>;
+    }
+
+    //_.isArrayBuffer
+    interface LoDashStatic {
+        /**
+         * Checks if value is classified as an ArrayBuffer object.
+         *
+         * @param value The value to check.
+         * @return Returns true if value is correctly classified, else false.
+         */
+        isArrayBuffer(value?: any): value is ArrayBuffer;
+    }
+
+    interface LoDashImplicitWrapperBase<T, TWrapper> {
+        /**
+         * @see _.isArrayBuffer
+         */
+        isArrayBuffer(): boolean;
+    }
+
+    interface LoDashExplicitWrapperBase<T, TWrapper> {
+        /**
+         * @see _.isArrayBuffer
+         */
+        isArrayBuffer(): LoDashExplicitWrapper<boolean>;
     }
 
     //_.isArrayLike
@@ -15920,6 +16006,37 @@ declare module _ {
             accumulator?: TResult[],
             thisArg?: any
         ): LoDashImplicitArrayWrapper<TResult>;
+    }
+
+    //_.unset
+    interface LoDashStatic {
+        /**
+         * Removes the property at path of object.
+         *
+         * Note: This method mutates object.
+         *
+         * @param object The object to modify.
+         * @param path The path of the property to unset.
+         * @return Returns true if the property is deleted, else false.
+         */
+        unset<T>(
+            object: T,
+            path: StringRepresentable|StringRepresentable[]
+        ): boolean;
+    }
+
+    interface LoDashImplicitObjectWrapper<T> {
+        /**
+         * @see _.unset
+         */
+        unset(path: StringRepresentable|StringRepresentable[]): LoDashImplicitWrapper<boolean>;
+    }
+
+    interface LoDashExplicitObjectWrapper<T> {
+        /**
+         * @see _.unset
+         */
+        unset(path: StringRepresentable|StringRepresentable[]): LoDashExplicitWrapper<boolean>;
     }
 
     //_.values
